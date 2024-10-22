@@ -4,7 +4,7 @@
 package linux
 
 /*
-#cgo linux pkg-config: gtk+-3.0 
+#cgo linux pkg-config: gtk+-3.0
 #cgo !webkit2_41 pkg-config: webkit2gtk-4.0
 #cgo webkit2_41 pkg-config: webkit2gtk-4.1
 
@@ -75,10 +75,10 @@ static void install_signal_handlers()
 
 */
 import "C"
+
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
 	"net"
@@ -107,7 +107,6 @@ const startURL = "wails://wails/"
 var secondInstanceBuffer = make(chan options.SecondInstanceData, 1)
 
 type Frontend struct {
-
 	// Context
 	ctx context.Context
 
@@ -143,9 +142,7 @@ func NewFrontend(ctx context.Context, appoptions *options.App, myLogger *logger.
 			_ = os.Setenv("GDK_BACKEND", "x11")
 		}
 
-		if ok := C.gtk_init_check(nil, nil); ok != 1 {
-			panic(errors.New("failed to init GTK"))
-		}
+		C.gtk_init(nil, nil)
 	})
 
 	result := &Frontend{
@@ -185,8 +182,8 @@ func NewFrontend(ctx context.Context, appoptions *options.App, myLogger *logger.
 
 	go result.startMessageProcessor()
 
-	var _debug = ctx.Value("debug")
-	var _devtoolsEnabled = ctx.Value("devtoolsEnabled")
+	_debug := ctx.Value("debug")
+	_devtoolsEnabled := ctx.Value("devtoolsEnabled")
 
 	if _debug != nil {
 		result.debug = _debug.(bool)
@@ -261,6 +258,7 @@ func (f *Frontend) WindowSetAlwaysOnTop(b bool) {
 func (f *Frontend) WindowSetPosition(x, y int) {
 	f.mainWindow.SetPosition(x, y)
 }
+
 func (f *Frontend) WindowGetPosition() (int, int) {
 	return f.mainWindow.GetPosition()
 }
@@ -310,18 +308,23 @@ func (f *Frontend) Show() {
 func (f *Frontend) Hide() {
 	f.mainWindow.Hide()
 }
+
 func (f *Frontend) WindowMaximise() {
 	f.mainWindow.Maximise()
 }
+
 func (f *Frontend) WindowToggleMaximise() {
 	f.mainWindow.ToggleMaximise()
 }
+
 func (f *Frontend) WindowUnmaximise() {
 	f.mainWindow.UnMaximise()
 }
+
 func (f *Frontend) WindowMinimise() {
 	f.mainWindow.Minimise()
 }
+
 func (f *Frontend) WindowUnminimise() {
 	f.mainWindow.UnMinimise()
 }
@@ -329,6 +332,7 @@ func (f *Frontend) WindowUnminimise() {
 func (f *Frontend) WindowSetMinSize(width int, height int) {
 	f.mainWindow.SetMinSize(width, height)
 }
+
 func (f *Frontend) WindowSetMaxSize(width int, height int) {
 	f.mainWindow.SetMaxSize(width, height)
 }
