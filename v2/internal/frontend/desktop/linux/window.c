@@ -505,25 +505,25 @@ GtkWidget *SetupWebview(void *contentManager, GtkWindow *window, int hideWindowO
     webkit_web_context_register_uri_scheme(context, "wails", (WebKitURISchemeRequestCallback)processURLRequest, NULL, NULL);
     g_signal_connect(G_OBJECT(webview), "load-changed", G_CALLBACK(webviewLoadChanged), NULL);
 
-    if(disableWebViewDragAndDrop)
-    {
-        gtk_drag_dest_unset(webview);
-    }
+    // if(disableWebViewDragAndDrop)
+    // {
+    //     gtk_drag_dest_unset(webview);
+    // }
 
-    if(enableDragAndDrop)
-    {
-        g_signal_connect(G_OBJECT(webview), "drag-data-received", G_CALLBACK(onDragDataReceived), NULL);
-        g_signal_connect(G_OBJECT(webview), "drag-drop", G_CALLBACK(onDragDrop), NULL);
-    }
+    // if(enableDragAndDrop)
+    // {
+    //     g_signal_connect(G_OBJECT(webview), "drag-data-received", G_CALLBACK(onDragDataReceived), NULL);
+    //     g_signal_connect(G_OBJECT(webview), "drag-drop", G_CALLBACK(onDragDrop), NULL);
+    // }
 
-    if (hideWindowOnClose)
-    {
-        g_signal_connect(GTK_WIDGET(window), "delete-event", G_CALLBACK(gtk_widget_hide_on_delete), NULL);
-    }
-    else
-    {
-        g_signal_connect(GTK_WIDGET(window), "delete-event", G_CALLBACK(close_button_pressed), NULL);
-    }
+    // if (hideWindowOnClose)
+    // {
+    //     g_signal_connect(GTK_WIDGET(window), "delete-event", G_CALLBACK(gtk_widget_hide_on_delete), NULL);
+    // }
+    // else
+    // {
+    //     g_signal_connect(GTK_WIDGET(window), "delete-event", G_CALLBACK(close_button_pressed), NULL);
+    // }
 
     WebKitSettings *settings = webkit_web_view_get_settings(WEBKIT_WEB_VIEW(webview));
     webkit_settings_set_user_agent_with_application_details(settings, "wails.io", "");
